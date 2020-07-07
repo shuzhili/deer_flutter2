@@ -1,5 +1,6 @@
 import 'package:deerflutter/login/login_router.dart';
 import 'package:deerflutter/routers/router_init.dart';
+import 'package:deerflutter/store/store_router.dart';
 import 'package:fluro/fluro.dart';
 import 'package:fluro/src/router.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +28,7 @@ class Routers {
 //    }));
 
     _listRouter.add(LoginRouter());
-
+    _listRouter.add(StoreRouter());
     _listRouter.forEach((element) {
       element.initRouter(router);
     });
