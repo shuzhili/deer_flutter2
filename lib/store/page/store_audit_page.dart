@@ -1,8 +1,18 @@
+import 'dart:io';
+
 import 'package:deerflutter/application.dart';
+import 'package:deerflutter/shop/shop_router.dart';
 import 'package:deerflutter/util/image_utils.dart';
+import 'package:deerflutter/util/log_utils.dart';
+import 'package:deerflutter/util/toast.dart';
+import 'package:deerflutter/widgets/SelectImage.dart';
 import 'package:deerflutter/widgets/app_bar.dart';
+import 'package:deerflutter/widgets/select_text.dart';
+import 'package:deerflutter/widgets/textfield_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_2d_amap/flutter_2d_amap.dart';
+import 'package:image_picker/image_picker.dart';
 
 class StoreAuditPage extends StatefulWidget {
   @override
@@ -12,6 +22,11 @@ class StoreAuditPage extends StatefulWidget {
 }
 
 class _StoreAuditPageState extends State<StoreAuditPage> {
+  File _imgFile;
+  TextEditingController storeNameController = new TextEditingController();
+  String sortName = "请请输入经验范围";
+  String address = "请输入地址";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,48 +55,137 @@ class _StoreAuditPageState extends State<StoreAuditPage> {
             style: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30),
           ),
-          buildSelectImg(),
-        ],
-      ),
-    );
-  }
-
-  Widget buildSelectImg() {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.center,
-      padding: EdgeInsets.only(top: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          InkWell(
-            onTap: () {
-              _selectImg();
-            },
-            borderRadius: BorderRadius.circular(16),
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  image: DecorationImage(
-                      image: ImageUtils.getAssetImage('/store/icon_zj'),
-                      fit: BoxFit.cover)),
-            ),
+          SelectImage(),
+          buildStoreName(),
+          SelectText(
+            title: "主营范围",
+            hitText: sortName,
+            onTap: () => selectContent(),
           ),
-          Container(
-            width: double.infinity,
-            height: 10,
+          SelectText(
+            title: "店铺地址",
+            hitText: address,
+            onTap: () {
+              Application.router
+                  .navigateTo(context, ShopRouter.addressSelectPage)
+                  .then((value) => {});
+            },
           ),
           Text(
-            '店主手持身份证或营业执照',
-            style: TextStyle(fontSize: 15, color: Colors.grey),
-          )
+            '店主信息',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30),
+          ),
+          TextFieldItem(title: '店主姓名', hitStr: sortName),
+          TextFieldItem(title: '联系电话', hitStr: '请输入联系电话'),
+          Container(
+            width: double.infinity,
+            height: 20,
+          ),
+          FlatButton(
+              onPressed: () {
+                Application.router
+                    .navigateTo(context, ShopRouter.addressSelectPage)
+                    .then((value) => {
+                          setState(() {
+                            PoiSearch model = value;
+                            Log.e(model.toString());
+                            address = model.provinceName +
+                                ' ' +
+                                model.cityName +
+                                ' ' +
+                                model.adName +
+                                ' ' +
+                                model.title;
+                          })
+                        });
+              },
+              child: Container(
+                alignment: Alignment.center,
+                width: double.infinity,
+                height: 48,
+                color: Colors.blue,
+                child: Text(
+                  '提交',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              ))
         ],
       ),
     );
   }
 
-  _selectImg() {}
+  //==================
+  Widget buildStoreName() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(right: 10),
+          child: Text(
+            '店铺名称',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.normal),
+          ),
+        ),
+        Expanded(
+            flex: 1,
+            child: TextField(
+              autofocus: false,
+              controller: storeNameController,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                  hintText: '请输入店铺名称',
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1),
+                  )),
+            )),
+      ],
+    );
+  }
+
+  String _sortName = '';
+  var _list = [
+    '水果生鲜',
+    '家用电器',
+    '休闲食品',
+    '茶酒饮料',
+    '美妆个护',
+    '粮油调味',
+    '家庭清洁',
+    '厨具用品',
+    '儿童玩具',
+    '床上用品'
+  ];
+
+  selectContent() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SizedBox(
+            height: 360,
+            child: ListView.builder(
+                key: const Key('goods_sotr'),
+                itemExtent: 48,
+                itemCount: _list.length,
+                itemBuilder: (_, index) {
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        sortName = _list[index];
+                      });
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      alignment: Alignment.centerLeft,
+                      child: Text(_list[index]),
+                    ),
+                  );
+                }),
+          );
+        });
+  }
 }
