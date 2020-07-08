@@ -56,7 +56,8 @@ class _StoreAudioResultPageState extends State<StoreAudioResultPage> {
         FlatButton(
             padding: EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 20),
             onPressed: () {
-              Application.router.navigateTo(context, Routers.home);
+              Application.router.navigateTo(context, Routers.home,
+                  clearStack: true, replace: true);
             },
             child: Container(
               height: 50,
