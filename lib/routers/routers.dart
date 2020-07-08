@@ -1,3 +1,4 @@
+import 'package:deerflutter/home/home_page.dart';
 import 'package:deerflutter/login/login_router.dart';
 import 'package:deerflutter/routers/router_init.dart';
 import 'package:deerflutter/shop/shop_router.dart';
@@ -21,7 +22,7 @@ class Routers {
       return WidgetNotFound();
     });
 
-//    router.define(home, handler: Handler(handlerFunc: (_,param)=>Home()));
+    router.define(home, handler: Handler(handlerFunc: (_,param)=>HomePage()));
 //    router.define(webViewPage, handler: Handler(handlerFunc: (_,param){
 //      String title=param['title']?.first;
 //      String url=param['url']?.first;

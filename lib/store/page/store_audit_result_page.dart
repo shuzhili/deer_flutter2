@@ -1,3 +1,5 @@
+import 'package:deerflutter/application.dart';
+import 'package:deerflutter/routers/routers.dart';
 import 'package:deerflutter/widgets/app_bar.dart';
 import 'package:deerflutter/widgets/load_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -53,7 +55,9 @@ class _StoreAudioResultPageState extends State<StoreAudioResultPage> {
         ),
         FlatButton(
             padding: EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 20),
-            onPressed: () {},
+            onPressed: () {
+              Application.router.navigateTo(context, Routers.home);
+            },
             child: Container(
               height: 50,
               width: double.infinity,
