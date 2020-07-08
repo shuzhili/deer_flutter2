@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:deerflutter/application.dart';
 import 'package:deerflutter/shop/shop_router.dart';
+import 'package:deerflutter/store/store_router.dart';
 import 'package:deerflutter/util/image_utils.dart';
 import 'package:deerflutter/util/log_utils.dart';
 import 'package:deerflutter/util/toast.dart';
@@ -69,7 +70,17 @@ class _StoreAuditPageState extends State<StoreAuditPage> {
               Application.router
                   .navigateTo(context, ShopRouter.addressSelectPage)
                   .then((value) => {
-
+                setState(() {
+                  PoiSearch model = value;
+                  Log.e(model.toString());
+                  address = model.provinceName +
+                      ' ' +
+                      model.cityName +
+                      ' ' +
+                      model.adName +
+                      ' ' +
+                      model.title;
+                })
               });
             },
           ),
@@ -86,21 +97,7 @@ class _StoreAuditPageState extends State<StoreAuditPage> {
           ),
           FlatButton(
               onPressed: () {
-                Application.router
-                    .navigateTo(context, ShopRouter.addressSelectPage)
-                    .then((value) => {
-                          setState(() {
-                            PoiSearch model = value;
-                            Log.e(model.toString());
-                            address = model.provinceName +
-                                ' ' +
-                                model.cityName +
-                                ' ' +
-                                model.adName +
-                                ' ' +
-                                model.title;
-                          })
-                        });
+                Application.router.navigateTo(context, StoreRouter.auditResultPage);
               },
               child: Container(
                 alignment: Alignment.center,
