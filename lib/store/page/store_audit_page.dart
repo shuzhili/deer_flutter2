@@ -68,7 +68,9 @@ class _StoreAuditPageState extends State<StoreAuditPage> {
             onTap: () {
               Application.router
                   .navigateTo(context, ShopRouter.addressSelectPage)
-                  .then((value) => {});
+                  .then((value) => {
+
+              });
             },
           ),
           Text(
