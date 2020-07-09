@@ -10,6 +10,6 @@ class GoodsPage extends StatefulWidget {
 class GoodsPageState extends State<GoodsPage> {
   @override
   Widget build(BuildContext context) {
-    throw Text("goods");
+    return Text("goods");
   }
 }

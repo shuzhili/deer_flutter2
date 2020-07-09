@@ -5,6 +5,7 @@ import 'package:deerflutter/order/order_page.dart';
 import 'package:deerflutter/res/colors.dart';
 import 'package:deerflutter/shop/shop_page.dart';
 import 'package:deerflutter/util/double_tap_exit_app.dart';
+import 'package:deerflutter/util/toast.dart';
 import 'package:deerflutter/widgets/load_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +88,7 @@ class _HomePageState extends State<HomePage> {
         icon: _tabImages[index][0],
         activeIcon: _tabImages[index][1],
         title: Padding(
-          padding: EdgeInsets.only(top: 15),
+          padding: EdgeInsets.only(top: 1.5),
           child: Text(_appBarTitles[index]),
         ),
       );
@@ -109,6 +110,8 @@ class _HomePageState extends State<HomePage> {
                 currentIndex: provider.value,
                 selectedItemColor: Colors.blue,
                 unselectedItemColor: Colors.grey,
+                elevation: 5.0,
+                iconSize: 21.0,
                 onTap: (index) {
                   _pageController.jumpToPage(index);
                 },
@@ -119,6 +122,14 @@ class _HomePageState extends State<HomePage> {
             controller: _pageController,
             children: _pageList,
             onPageChanged: _onPageChanged,
+          ),
+          floatingActionButton: FloatingActionButton(
+            highlightElevation: 0.5,
+            hoverElevation: 0.5,
+            child: Icon(Icons.add),
+            onPressed: () {
+              Toast.show("floatingactionButton");
+            },
           ),
         ),
       ),
