@@ -1,6 +1,8 @@
 import 'package:deerflutter/widgets/state_layout.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'order_item.dart';
+
 class OrderListPage extends StatefulWidget {
   final int index;
 
@@ -38,7 +40,7 @@ class _OrderListPageState extends State<OrderListPage> {
               : SliverList(
                   delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                    return Text('sliver');
+                    return index<_list.length?OrderItem():Text('loadingmore');
                   }, childCount: _list.length + 1),
                 ),
         ),
