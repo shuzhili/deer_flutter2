@@ -1,5 +1,8 @@
+import 'package:deerflutter/order/order_page_provider.dart';
 import 'package:deerflutter/widgets/state_layout.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'order_item.dart';
 
@@ -25,27 +28,44 @@ class _OrderListPageState extends State<OrderListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: _controller,
-      slivers: [
-        SliverOverlapInjector(
-          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
-          sliver: _list.isEmpty
-              ? SliverFillRemaining(
-                  child: StateLayout(type: _stateType),
-                )
-              : SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                    return index<_list.length?OrderItem():Text('loadingmore');
-                  }, childCount: _list.length + 1),
-                ),
-        ),
-      ],
-    );
+    return NotificationListener(
+        onNotification: (ScrollNotification note) {
+          if (note.metrics.pixels == note.metrics.maxScrollExtent) {
+            loadMore();
+          }
+          return true;
+        },
+        child: RefreshIndicator(
+            onRefresh: _onRefresh,
+            displacement: 120.0,
+            child: Consumer<OrderPageProvider>(
+              builder: (_, provider, child) {
+                return CustomScrollView(
+                  controller: _controller,
+                  slivers: [
+                    SliverOverlapInjector(
+                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                          context),
+                    ),
+                    SliverPadding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      sliver: _list.isEmpty
+                          ? SliverFillRemaining(
+                              child: StateLayout(type: _stateType),
+                            )
+                          : SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                  (BuildContext context, int index) {
+                                return index < _list.length
+                                    ? OrderItem()
+                                    : Text('loadingmore');
+                              }, childCount: _list.length + 1),
+                            ),
+                    ),
+                  ],
+                );
+              },
+            )));
   }
 
   int _page = 1;

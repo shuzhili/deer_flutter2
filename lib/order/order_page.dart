@@ -54,6 +54,7 @@ class _OrderPageState extends State<OrderPage>
               ),
             ),
             NestedScrollView(
+                physics: ClampingScrollPhysics(),
                 headerSliverBuilder: (context, innerBoxIsScrolled) =>
                     _sLiverBuilder(context),
                 body: Center(
@@ -63,7 +64,7 @@ class _OrderPageState extends State<OrderPage>
                       onPageChanged: _onPageChange,
                       itemBuilder: (context, index) {
                         return Center(
-                          child: OrderListPage(index:index),
+                          child: OrderListPage(index: index),
                         );
                       }),
                 ))

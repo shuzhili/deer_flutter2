@@ -10,11 +10,12 @@ class BaseDialog extends StatelessWidget {
   final Widget child;
   final bool hiddenTitle;
 
-  BaseDialog({Key key,
-    this.title,
-    this.onPressed,
-    this.hiddenTitle: false,
-    @required this.child})
+  BaseDialog(
+      {Key key,
+      this.title,
+      this.onPressed,
+      this.hiddenTitle: false,
+      @required this.child})
       : super();
 
   @override
@@ -24,14 +25,8 @@ class BaseDialog extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: AnimatedContainer(
         alignment: Alignment.center,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height -
-            MediaQuery
-                .of(context)
-                .viewInsets
-                .bottom,
+        height: MediaQuery.of(context).size.height -
+            MediaQuery.of(context).viewInsets.bottom,
         duration: Duration(milliseconds: 120),
         curve: Curves.easeInCubic,
         child: Container(
@@ -40,7 +35,7 @@ class BaseDialog extends StatelessWidget {
             borderRadius: BorderRadius.circular(5.0),
           ),
           width: 270,
-          padding: EdgeInsets.only(top: 24.0),
+          padding: EdgeInsets.all(24.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -88,9 +83,7 @@ class BaseDialog extends StatelessWidget {
                           '确定',
                           style: TextStyle(fontSize: Dimens.font_sp18),
                         ),
-                        textColor: Theme
-                            .of(context)
-                            .primaryColor,
+                        textColor: Theme.of(context).primaryColor,
                         onPressed: () {
                           onPressed();
                         },

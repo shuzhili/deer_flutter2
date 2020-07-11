@@ -43,10 +43,10 @@ class _PayTypeDialog extends State<PayTypeDialog> {
             ],
           ),
         ),
-        onTap: (){
-          if(mounted){
+        onTap: () {
+          if (mounted) {
             setState(() {
-              _value=index;
+              _value = index;
             });
           }
         },
@@ -68,9 +68,9 @@ class _PayTypeDialog extends State<PayTypeDialog> {
           getItem(3),
         ],
       ),
-      onPressed: (){
+      onPressed: () {
         Navigator.pop(context);
-        widget.onPressed(_value,_list[_value]);
+        widget.onPressed(_value, _list[_value]);
       },
     );
   }

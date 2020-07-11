@@ -3,6 +3,7 @@ import 'package:deerflutter/order/pay_type_dialog.dart';
 import 'package:deerflutter/res/dimens.dart';
 import 'package:deerflutter/res/gaps.dart';
 import 'package:deerflutter/util/toast.dart';
+import 'package:deerflutter/util/utils.dart';
 import 'package:deerflutter/widgets/my_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -127,18 +128,16 @@ class _OrderItemState extends State<OrderItem> {
                         textColor: Colors.white,
                         bgColor: Colors.blue,
                         onTap: () {
-                          if (widget.tabIndex == 2) {
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (BuildContext context) {
-                                  return PayTypeDialog(
-                                    onPressed: (index, type) {
-                                      Toast.show('收款类型：$type');
-                                    },
-                                  );
-                                });
-                          }
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return PayTypeDialog(
+                                  onPressed: (index, type) {
+                                    Toast.show('收款类型：$type');
+                                  },
+                                );
+                              });
                         },
                       ),
                     ],
@@ -150,7 +149,30 @@ class _OrderItemState extends State<OrderItem> {
     );
   }
 
-  _showCallPhoneDialog(BuildContext context, String str) {}
+  _showCallPhoneDialog(BuildContext context, String str) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('提示'),
+            content: Text('拨打13439328295'),
+            actions: [
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('取消')),
+              FlatButton(
+                  onPressed: () {
+                    Utils.launchTelURL('13439328295');
+                    Navigator.pop(context);
+                  },
+                  child: Text('拨打')),
+            ],
+          );
+        });
+  }
 }
 
 class OrderItemButton extends StatelessWidget {
