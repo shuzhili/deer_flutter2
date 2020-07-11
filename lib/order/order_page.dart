@@ -1,3 +1,4 @@
+import 'package:deerflutter/order/order_list_page.dart';
 import 'package:deerflutter/order/order_page_provider.dart';
 import 'package:deerflutter/util/image_utils.dart';
 import 'package:deerflutter/util/toast.dart';
@@ -62,7 +63,7 @@ class _OrderPageState extends State<OrderPage>
                       onPageChanged: _onPageChange,
                       itemBuilder: (context, index) {
                         return Center(
-                          child: Text('text$index'),
+                          child: OrderListPage(index:index),
                         );
                       }),
                 ))
