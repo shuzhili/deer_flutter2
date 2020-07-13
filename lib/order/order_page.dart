@@ -26,8 +26,17 @@ class _OrderPageState extends State<OrderPage>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 5);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _preCacheImage();
+    });
   }
-
+  _preCacheImage(){
+    precacheImage(ImageUtils.getAssetImage('order/xdd_n'), context);
+    precacheImage(ImageUtils.getAssetImage('order/dps_s'), context);
+    precacheImage(ImageUtils.getAssetImage('order/dwc_s'), context);
+    precacheImage(ImageUtils.getAssetImage('order/ywc_s'), context);
+    precacheImage(ImageUtils.getAssetImage('order/yqx_s'), context);
+  }
   @override
   void dispose() {
     _tabController?.dispose();
@@ -54,20 +63,19 @@ class _OrderPageState extends State<OrderPage>
               ),
             ),
             NestedScrollView(
-                physics: ClampingScrollPhysics(),
-                headerSliverBuilder: (context, innerBoxIsScrolled) =>
-                    _sLiverBuilder(context),
-                body: Center(
-                  child: PageView.builder(
-                      itemCount: 5,
-                      controller: _pageController,
-                      onPageChanged: _onPageChange,
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: OrderListPage(index: index),
-                        );
-                      }),
-                ))
+              physics: ClampingScrollPhysics(),
+              headerSliverBuilder: (context, innerBoxIsScrolled) =>
+                  _sLiverBuilder(context),
+              body: PageView.builder(
+                  itemCount: 5,
+                  controller: _pageController,
+                  onPageChanged: _onPageChange,
+                  itemBuilder: (context, index) {
+                    return Center(
+                      child: OrderListPage(index: index),
+                    );
+                  }),
+            ),
           ],
         ),
       ),

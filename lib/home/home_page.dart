@@ -122,6 +122,7 @@ class _HomePageState extends State<HomePage> {
             controller: _pageController,
             children: _pageList,
             onPageChanged: _onPageChanged,
+            physics: NeverScrollableScrollPhysics(),
           ),
           floatingActionButton: FloatingActionButton(
             highlightElevation: 0.5,

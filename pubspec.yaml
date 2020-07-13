@@ -70,6 +70,7 @@ flutter:
     - assets/images/store/
     - assets/images/home/
     - assets/images/order/
+    - assets/images/goods/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
